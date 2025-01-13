@@ -1,4 +1,3 @@
-// http://api.weatherapi.com/v1/current.json?key=bd03e7ee897349f79cd191646250401&q=London&aqi=yes
 const input = document.querySelector('.search');
 const btn = document.querySelector('.search-btn');
 const mycity = document.querySelector('.city');
@@ -19,7 +18,7 @@ input.addEventListener('keydown', (event) => {
 async function fetchWeather() {
     const cityName = input.value.trim();
     const apiKey = 'bd03e7ee897349f79cd191646250401'; // Replace with your actual API key
-    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=yes`;
+    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${cityName}&days=3&aqi=yes`; // Use forecast endpoint
     
     try {
         const response = await fetch(apiUrl);
@@ -34,6 +33,8 @@ async function fetchWeather() {
         const weatherText = data.current.condition.text;
         const temperature = data.current.temp_c;
         const wholeNumTemp = Math.floor(temperature);
+        
+        // Now accessing forecast data correctly
         const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
         const minTemp = data.forecast.forecastday[0].day.mintemp_c;
         const weatherIcon = data.current.condition.icon;
