@@ -19,7 +19,7 @@ input.addEventListener('keydown', (event) => {
 async function fetchWeather() {
     const cityName = input.value.trim();
     const apiKey = 'bd03e7ee897349f79cd191646250401'; // Replace with your actual API key
-    const apiUrl = `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${cityName}&days=1&aqi=yes`;
+    const apiUrl = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=yes`;
     
     try {
         const response = await fetch(apiUrl);
