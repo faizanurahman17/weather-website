@@ -33,6 +33,7 @@ async function fetchWeather() {
         const country = data.location.country;
         const weatherText = data.current.condition.text;
         const temperature = data.current.temp_c;
+        const wholeNumTemp = Math.floor(temperature);
         const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
         const minTemp = data.forecast.forecastday[0].day.mintemp_c;
         const weatherIcon = data.current.condition.icon;
@@ -42,7 +43,7 @@ async function fetchWeather() {
         console.log(data);
 
         mycity.textContent = `${name.toUpperCase()}, ${region.toUpperCase()}, ${country.toUpperCase()}`;
-        tempDisplay.textContent = `${temperature}°C`;
+        tempDisplay.textContent = `${wholeNumTemp}°C`;
         weatherDisplay.textContent = `${weatherText}`;
         max.textContent = `${maxTemp}`;
         min.textContent = `${minTemp}`;
