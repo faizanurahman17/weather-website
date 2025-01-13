@@ -18,7 +18,7 @@ input.addEventListener('keydown', (event) => {
 async function fetchWeather() {
     const cityName = input.value.trim();
     const apiKey = 'bd03e7ee897349f79cd191646250401'; // Replace with your actual API key
-    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${cityName}&days=3&aqi=yes`; // Use forecast endpoint
+    const apiUrl = `https://cors-anywhere.herokuapp.com/https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${cityName}&days=3&aqi=yes`; // Use forecast endpoint
     
     try {
         const response = await fetch(apiUrl);
