@@ -18,33 +18,28 @@ input.addEventListener('keydown', (event) => {
 async function fetchWeather() {
     const cityName = input.value.trim();
     const apiKey = 'bd03e7ee897349f79cd191646250401'; // Replace with your actual API key
-    const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('https://api.weatherapi.com/v1/current.json?key=' + apiKey + '&q=' + cityName + '&aqi=yes')}`;
+    const apiUrl = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${cityName}&days=1&aqi=yes`;
+    const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`;
     
     try {
-        const response = await fetch(apiUrl);
+        const response = await fetch(proxyUrl);
         if (!response.ok) {
             throw new Error('City not found');
         }
+        const wrappedData = await response.json();
+        const data = JSON.parse(wrappedData.contents); // Extract actual data
 
-        const data = await response.json();
         const name = data.location.name;
         const region = data.location.region;
         const country = data.location.country;
         const weatherText = data.current.condition.text;
-        const temperature = data.current.temp_c;
-        const wholeNumTemp = Math.floor(temperature);
-        
-        // Now accessing forecast data correctly
+        const temperature = Math.floor(data.current.temp_c);
         const maxTemp = data.forecast.forecastday[0].day.maxtemp_c;
         const minTemp = data.forecast.forecastday[0].day.mintemp_c;
         const weatherIcon = data.current.condition.icon;
 
-        // Debugging logs
-        console.log(`Weather icon: https:${weatherIcon}`);
-        console.log(data);
-
         mycity.textContent = `${name.toUpperCase()}, ${region.toUpperCase()}, ${country.toUpperCase()}`;
-        tempDisplay.textContent = `${wholeNumTemp}°C`;
+        tempDisplay.textContent = `${temperature}°C`;
         weatherDisplay.textContent = `${weatherText}`;
         max.textContent = `${maxTemp}`;
         min.textContent = `${minTemp}`;
